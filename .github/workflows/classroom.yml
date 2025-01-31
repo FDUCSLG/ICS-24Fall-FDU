@@ -1,0 +1,286 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Operator Check
+      id: operator-check
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Operator Check
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && chmod +x dlc && ./dlc bits.c
+        input: ''
+        expected-output: '^$'
+        comparison-method: regex
+        timeout: 10
+        max-score: 100
+    - name: tmax
+      id: tmax
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: tmax
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f tmax
+        input: ''
+        expected-output: 'Total points: 1/1'
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+    - name: bitNor
+      id: bitnor
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: bitNor
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f bitNor
+        input: ''
+        expected-output: 'Total points: 2/2'
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: getByte
+      id: getbyte
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: getByte
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f getByte
+        input: ''
+        expected-output: 'Total points: 2/2'
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: roundUp
+      id: roundup
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: roundUp
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f roundUp
+        input: ''
+        expected-output: 'Total points: 3/3'
+        comparison-method: contains
+        timeout: 10
+        max-score: 3
+    - name: absVal
+      id: absval
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: absVal
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f absVal
+        input: ''
+        expected-output: 'Total points: 3/3'
+        comparison-method: contains
+        timeout: 10
+        max-score: 3
+    - name: isLessOrEqual
+      id: islessorequal
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: isLessOrEqual
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f isLessOrEqual
+        input: ''
+        expected-output: 'Total points: 4/4'
+        comparison-method: contains
+        timeout: 10
+        max-score: 4
+    - name: logicalShift
+      id: logicalshift
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: logicalShift
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f logicalShift
+        input: ''
+        expected-output: 'Total points: 4/4'
+        comparison-method: contains
+        timeout: 10
+        max-score: 4
+    - name: swapOddandEven
+      id: swapoddandeven
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: swapOddandEven
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f swapOddandEven
+        input: ''
+        expected-output: 'Total points: 4/4'
+        comparison-method: contains
+        timeout: 10
+        max-score: 4
+    - name: secondLowBit
+      id: secondlowbit
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: secondLowBit
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f secondLowBit
+        input: ''
+        expected-output: 'Total points: 4/4'
+        comparison-method: contains
+        timeout: 10
+        max-score: 4
+    - name: rotateNBits
+      id: rotatenbits
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: rotateNBits
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f rotateNBits
+        input: ''
+        expected-output: 'Total points: 5/5'
+        comparison-method: contains
+        timeout: 10
+        max-score: 5
+    - name: fractions
+      id: fractions
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: fractions
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f fractions
+        input: ''
+        expected-output: 'Total points: 5/5'
+        comparison-method: contains
+        timeout: 10
+        max-score: 5
+    - name: overflowCalc
+      id: overflowcalc
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: overflowCalc
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f overflowCalc
+        input: ''
+        expected-output: 'Total points: 7/7'
+        comparison-method: contains
+        timeout: 10
+        max-score: 7
+    - name: mul3
+      id: mul3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: mul3
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f mul3
+        input: ''
+        expected-output: 'Total points: 7/7'
+        comparison-method: contains
+        timeout: 10
+        max-score: 7
+    - name: float_abs
+      id: float_abs
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: float_abs
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f float_abs
+        input: ''
+        expected-output: 'Total points: 3/3'
+        comparison-method: contains
+        timeout: 10
+        max-score: 3
+    - name: float_half
+      id: float_half
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: float_half
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f float_half
+        input: ''
+        expected-output: 'Total points: 4/4'
+        comparison-method: contains
+        timeout: 10
+        max-score: 4
+    - name: float_i2f
+      id: float_i2f
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: float_i2f
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f float_i2f
+        input: ''
+        expected-output: 'Total points: 7/7'
+        comparison-method: contains
+        timeout: 10
+        max-score: 7
+    - name: oddParity
+      id: oddparity
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: oddParity
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f oddParity
+        input: ''
+        expected-output: 'Total points: 2/2'
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: bitCount
+      id: bitcount
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: bitCount
+        setup-command: sudo apt-get install gcc-multilib && cd datalab && make clean
+          && make all
+        command: cd datalab && ./btest -f bitCount
+        input: ''
+        expected-output: 'Total points: 2/2'
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        OPERATOR-CHECK_RESULTS: "${{steps.operator-check.outputs.result}}"
+        TMAX_RESULTS: "${{steps.tmax.outputs.result}}"
+        BITNOR_RESULTS: "${{steps.bitnor.outputs.result}}"
+        GETBYTE_RESULTS: "${{steps.getbyte.outputs.result}}"
+        ROUNDUP_RESULTS: "${{steps.roundup.outputs.result}}"
+        ABSVAL_RESULTS: "${{steps.absval.outputs.result}}"
+        ISLESSOREQUAL_RESULTS: "${{steps.islessorequal.outputs.result}}"
+        LOGICALSHIFT_RESULTS: "${{steps.logicalshift.outputs.result}}"
+        SWAPODDANDEVEN_RESULTS: "${{steps.swapoddandeven.outputs.result}}"
+        SECONDLOWBIT_RESULTS: "${{steps.secondlowbit.outputs.result}}"
+        ROTATENBITS_RESULTS: "${{steps.rotatenbits.outputs.result}}"
+        FRACTIONS_RESULTS: "${{steps.fractions.outputs.result}}"
+        OVERFLOWCALC_RESULTS: "${{steps.overflowcalc.outputs.result}}"
+        MUL3_RESULTS: "${{steps.mul3.outputs.result}}"
+        FLOAT_ABS_RESULTS: "${{steps.float_abs.outputs.result}}"
+        FLOAT_HALF_RESULTS: "${{steps.float_half.outputs.result}}"
+        FLOAT_I2F_RESULTS: "${{steps.float_i2f.outputs.result}}"
+        ODDPARITY_RESULTS: "${{steps.oddparity.outputs.result}}"
+        BITCOUNT_RESULTS: "${{steps.bitcount.outputs.result}}"
+      with:
+        runners: operator-check,tmax,bitnor,getbyte,roundup,absval,islessorequal,logicalshift,swapoddandeven,secondlowbit,rotatenbits,fractions,overflowcalc,mul3,float_abs,float_half,float_i2f,oddparity,bitcount
