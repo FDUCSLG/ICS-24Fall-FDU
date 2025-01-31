@@ -1,0 +1,159 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: test1-2
+      id: test1-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: test1-2
+        setup-command: cd Task1_2 && chmod +x ./bash-calc && chmod +x ./malware && cd ..
+        command: cd Task1_2 && python3 payload.py > payload && ./bash-calc < payload; echo ""
+        input: ''
+        expected-output: You have successfully detonated the bomb! Congratulations!
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: task3-1
+      id: task3-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: task3-1
+        setup-command: cd Task3 && make clean && make all && chmod +x ./program && cd ..
+        command: cd Task3 && ./program
+        input: ''
+        expected-output: |-
+          test1 PASSED
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: task3-2
+      id: task3-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: task3-2
+        setup-command: cd Task3 && make clean && make all && chmod +x ./program && cd ..
+        command: cd Task3 && ./program
+        input: ''
+        expected-output: |-
+          test2 PASSED
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: task3-3
+      id: task3-3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: task3-3
+        setup-command: cd Task3 && make clean && make all && chmod +x ./program && cd ..
+        command: cd Task3 && ./program
+        input: ''
+        expected-output: |-
+          test3 PASSED
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: task3-4
+      id: task3-4
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: task3-4
+        setup-command: cd Task3 && make clean && make all && chmod +x ./program && cd ..
+        command: cd Task3 && ./program
+        input: ''
+        expected-output: |-
+          test4 PASSED
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: task3-5
+      id: task3-5
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: task3-5
+        setup-command: cd Task3 && make clean && make all && chmod +x ./program && cd ..
+        command: cd Task3 && ./program
+        input: ''
+        expected-output: |-
+          test5 PASSED
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: task3-6
+      id: task3-6
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: task3-6
+        setup-command: cd Task3 && make clean && make all && chmod +x ./program && cd ..
+        command: cd Task3 && ./program
+        input: ''
+        expected-output: |-
+          test6 PASSED
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: task3-7
+      id: task3-7
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: task3-7
+        setup-command: cd Task3 && make clean && make all && chmod +x ./program && cd ..
+        command: cd Task3 && ./program
+        input: ''
+        expected-output: |-
+          test7 PASSED
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: task3-8
+      id: task3-8
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: task3-8
+        setup-command: cd Task3 && make clean && make all && chmod +x ./program && cd ..
+        command: cd Task3 && ./program
+        input: ''
+        expected-output: |-
+          test8 PASSED
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: task3-progress_bar
+      id: task3-progress_bar
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: task3-progress_bar
+        setup-command: cd Task3 && make clean && make all && chmod +x ./program && cd ..
+        command: cd Task3 && ./program
+        input: ''
+        expected-output: |-
+          progress bar SHOWN
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST1-2_RESULTS: "${{steps.test1-2.outputs.result}}"
+        TASK3-1_RESULTS: "${{steps.task3-1.outputs.result}}"
+        TASK3-2_RESULTS: "${{steps.task3-2.outputs.result}}"
+        TASK3-3_RESULTS: "${{steps.task3-3.outputs.result}}"
+        TASK3-4_RESULTS: "${{steps.task3-4.outputs.result}}"
+        TASK3-5_RESULTS: "${{steps.task3-5.outputs.result}}"
+        TASK3-6_RESULTS: "${{steps.task3-6.outputs.result}}"
+        TASK3-7_RESULTS: "${{steps.task3-7.outputs.result}}"
+        TASK3-8_RESULTS: "${{steps.task3-8.outputs.result}}"
+        TASK3-PROGRESS_BAR_RESULTS: "${{steps.task3-progress_bar.outputs.result}}"
+      with:
+        runners: test1-2,task3-1,task3-2,task3-3,task3-4,task3-5,task3-6,task3-7,task3-8,task3-progress_bar
