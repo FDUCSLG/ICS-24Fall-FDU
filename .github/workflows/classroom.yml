@@ -1,0 +1,72 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Part A
+      id: part-a
+      uses: kooWZ/autograding-io-grader@v4
+      with:
+        test-name: Part A
+        setup-command: sudo apt install valgrind && make clean && make && chmod +x ./test-csim && chmod +x ./csim-ref && cd heat-sim && make clean && make && chmod +x ./test-heat
+        command: python3 driver.py -A > grade && cat grade
+        input: ''
+        expected-output: '0'
+        comparison-method: cachelab
+        timeout: 10
+        max-score: 39
+    - name: Part B 48*48
+      id: part-b-48-48
+      uses: kooWZ/autograding-io-grader@v4
+      with:
+        test-name: Part B 48*48
+        setup-command: 
+        command: cat grade
+        input: ''
+        expected-output: '1'
+        comparison-method: cachelab
+        timeout: 10
+        max-score: 17
+    - name: Part B 96*96
+      id: part-b-96-96
+      uses: kooWZ/autograding-io-grader@v4
+      with:
+        test-name: Part B 96*96
+        setup-command: 
+        command: cat grade
+        input: ''
+        expected-output: '2'
+        comparison-method: cachelab
+        timeout: 10
+        max-score: 17
+    - name: Part C
+      id: part-c
+      uses: kooWZ/autograding-io-grader@v4
+      with:
+        test-name: Part C
+        setup-command: 
+        command: cat grade
+        input: ''
+        expected-output: '3'
+        comparison-method: cachelab
+        timeout: 10
+        max-score: 9
+    - name: Autograding Reporter
+      uses: kooWZ/autograding-grading-reporter@v5
+      env:
+        PART-A_RESULTS: "${{steps.part-a.outputs.result}}"
+        PART-B-48-48_RESULTS: "${{steps.part-b-48-48.outputs.result}}"
+        PART-B-96-96_RESULTS: "${{steps.part-b-96-96.outputs.result}}"
+        PART-C_RESULTS: "${{steps.part-c.outputs.result}}"
+      with:
+        runners: part-a,part-b-48-48,part-b-96-96,part-c
